@@ -74,3 +74,35 @@ Current State
    Reducer
       ↓
  New State
+
+ ---
+
+# 15. useEffect Deep Dive
+
+## What is an Effect?
+
+React components primarily calculate UI from props and state.
+
+Applications also need to interact with external systems such as:
+
+- APIs
+- Browser events
+- Timers
+- Subscriptions
+- WebSockets
+- Third-party libraries
+
+`useEffect` is used to synchronize a component with external systems.
+
+---
+
+## Basic Structure
+
+```tsx
+useEffect(() => {
+  // effect logic
+
+  return () => {
+    // cleanup logic
+  };
+}, [dependencies]);
