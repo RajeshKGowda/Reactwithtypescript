@@ -126,3 +126,18 @@ Service
     ↓
 API
 
+# 17. React Router
+
+React Router allows a React application to map URLs to components and build multi-page application experiences without performing a full browser reload.
+
+## Basic Routing
+
+Routes are defined using `Routes` and `Route`.
+
+Example:
+
+```tsx
+<Routes>
+  <Route path="/" element={<DashboardPage />} />
+  <Route path="/tasks" element={<TasksPage />} />
+</Routes>
