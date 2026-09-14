@@ -1,111 +1,67 @@
-import { memo, useCallback, useMemo, useState } from "react";
-
-interface User {
-  name: string;
-  role: string;
-}
-
-interface ChildAProps {
-  user: User;
-  onUserClick: () => void;
-}
-
-const ChildA = memo(function ChildA({
-  user,
-  onUserClick,
-}: ChildAProps) {
-  console.log("ChildA rendered");
-
-  return (
-    <div>
-      <h2>Child A</h2>
-
-      <p>Name: {user.name}</p>
-      <p>Role: {user.role}</p>
-
-      <button onClick={onUserClick}>
-        Click User
-      </button>
-    </div>
-  );
-});
-
-function ChildB() {
-  console.log("ChildB rendered");
-
-  return (
-    <div>
-      <h2>Child B</h2>
-      <p>I don't receive any props.</p>
-    </div>
-  );
-}
+import { useState } from "react";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [otherCount, setOtherCount] = useState(0);
 
-  /*
-   * useMemo keeps the same object reference
-   * between renders as long as dependencies don't change.
-   */
-  const user = useMemo<User>(
-    () => ({
-      name: "Rajesh",
-      role: "Developer",
-    }),
-    []
-  );
+  console.log("App rendered with count:", count);
 
-  /*
-   * useCallback keeps the same function reference
-   * between renders as long as dependencies don't change.
-   */
-  const handleUserClick = useCallback(() => {
-    console.log("User clicked");
-  }, []);
+  function incrementThreeTimes() {
+    console.log("Before updates:", count);
 
-  console.log("App rendered");
+    setCount(count + 1);
+    setCount(count + 1);
+    setCount(count + 1);
+
+    console.log("After updates:", count);
+  }
+
+  function incrementThreeTimesCorrectly() {
+    console.log("Before functional updates:", count);
+
+    setCount((previousCount) => previousCount + 1);
+    setCount((previousCount) => previousCount + 1);
+    setCount((previousCount) => previousCount + 1);
+
+    console.log("After functional updates:", count);
+  }
 
   return (
     <div>
-      <h1>useMemo + useCallback + React.memo</h1>
+      <h1>useState Deep Dive</h1>
 
       <p>
-        This experiment demonstrates value references,
-        function references, and memoized components.
+        Current count: <strong>{count}</strong>
       </p>
 
       <hr />
 
-      <h2>Parent Component</h2>
+      <h2>Experiment 1: Direct Updates</h2>
 
       <p>
-        Count: <strong>{count}</strong>
+        Each update uses the count value from the current render.
       </p>
 
-      <button onClick={() => setCount(count + 1)}>
-        Increment Count
-      </button>
-
-      <p>
-        Other Count: <strong>{otherCount}</strong>
-      </p>
-
-      <button onClick={() => setOtherCount(otherCount + 1)}>
-        Increment Other Count
+      <button onClick={incrementThreeTimes}>
+        +3 Using Direct Updates
       </button>
 
       <hr />
 
-      <h2>Child Components</h2>
+      <h2>Experiment 2: Functional Updates</h2>
 
-      <ChildA
-        user={user}
-        onUserClick={handleUserClick}
-      />
+      <p>
+        Each update receives the latest state value.
+      </p>
 
-      <ChildB />
+      <button onClick={incrementThreeTimesCorrectly}>
+        +3 Using Functional Updates
+      </button>
+
+      <hr />
+
+      <button onClick={() => setCount(0)}>
+        Reset
+      </button>
     </div>
   );
 }

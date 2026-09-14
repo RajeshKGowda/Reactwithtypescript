@@ -25,3 +25,20 @@ React renders components to determine what the UI should look like and then reco
 Component render
        ≠
 Entire DOM update
+
+---
+
+# 13. useState Deep Dive
+
+## State as a Snapshot
+
+State variables represent the state for the current render.
+
+Calling a state setter schedules an update but does not mutate the state variable belonging to the current render.
+
+Example:
+
+```tsx
+setCount(count + 1);
+
+console.log(count);
