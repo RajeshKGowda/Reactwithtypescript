@@ -6,7 +6,11 @@ import {
   
   import AppLayout from "./AppLayout";
   
+  import { TaskProvider } from "../context/TaskContext";
+  
   import DashboardPage from "../features/dashboard/pages/DashboardPage";
+  
+  import UserPage from "../features/dashboard/pages/UserPage";
   
   import TasksPage from "../features/tasks/pages/TasksPage";
   
@@ -15,8 +19,6 @@ import {
   import SettingsPage from "../features/settings/pages/SettingsPage";
   
   import NotFoundPage from "../pages/NotFoundPage";
-  
-  import { TaskProvider } from "../context/TaskContext";
   
   function AppRouter() {
     return (
@@ -30,6 +32,11 @@ import {
               <Route
                 index
                 element={<DashboardPage />}
+              />
+  
+              <Route
+                path="user"
+                element={<UserPage />}
               />
   
               <Route

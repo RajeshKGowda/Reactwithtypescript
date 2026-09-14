@@ -18,3 +18,23 @@ export async function getUser(
 
   return response.json();
 }
+
+export async function updateUser(
+  user: Partial<User>
+): Promise<User> {
+  const response = await fetch(API_URL, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to update user. Status: ${response.status}`
+    );
+  }
+
+  return response.json();
+}

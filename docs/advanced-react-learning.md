@@ -164,3 +164,26 @@ TasksPage
 TaskList
  ↓ props
 TaskItem
+
+# 19. Server State with TanStack Query
+
+Server state is data that originates from a remote server and is managed outside the React application.
+
+Examples include:
+
+- users
+- products
+- orders
+- comments
+- notifications
+
+## Client State vs Server State
+
+Client state is owned by the application.
+
+Examples:
+
+```text
+useState
+Context
+useReducer
