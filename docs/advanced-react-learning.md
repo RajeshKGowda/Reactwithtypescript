@@ -42,3 +42,35 @@ Example:
 setCount(count + 1);
 
 console.log(count);
+
+---
+
+# 14. useReducer and State Architecture
+
+## Why useReducer?
+
+`useState` works very well for simple, independent pieces of state.
+
+As state becomes more complex, there may be many different operations that can modify the same state.
+
+For example, a task management application may need:
+
+- Add task
+- Toggle task
+- Delete task
+- Clear completed tasks
+
+`useReducer` allows these state transitions to be modeled explicitly.
+
+---
+
+## Reducer Mental Model
+
+```text
+Current State
+      +
+   Action
+      ↓
+   Reducer
+      ↓
+ New State
