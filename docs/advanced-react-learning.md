@@ -141,3 +141,26 @@ Example:
   <Route path="/" element={<DashboardPage />} />
   <Route path="/tasks" element={<TasksPage />} />
 </Routes>
+
+# 18. React Context + useReducer
+
+React Context allows data to be shared with components without passing props through every level of the component tree.
+
+Context does not manage state by itself. It provides a mechanism for making values available to descendant components.
+
+Combining Context with `useReducer` provides a useful pattern for managing shared application state.
+
+## Prop Drilling
+
+Without Context, state may need to be passed through several components:
+
+```text
+App
+ ↓ props
+Layout
+ ↓ props
+TasksPage
+ ↓ props
+TaskList
+ ↓ props
+TaskItem

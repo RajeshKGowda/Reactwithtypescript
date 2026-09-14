@@ -16,40 +16,44 @@ import {
   
   import NotFoundPage from "../pages/NotFoundPage";
   
+  import { TaskProvider } from "../context/TaskContext";
+  
   function AppRouter() {
     return (
       <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={<AppLayout />}
-          >
+        <TaskProvider>
+          <Routes>
             <Route
-              index
-              element={<DashboardPage />}
-            />
+              path="/"
+              element={<AppLayout />}
+            >
+              <Route
+                index
+                element={<DashboardPage />}
+              />
   
-            <Route
-              path="tasks"
-              element={<TasksPage />}
-            />
+              <Route
+                path="tasks"
+                element={<TasksPage />}
+              />
   
-            <Route
-              path="tasks/:taskId"
-              element={<TaskDetailsPage />}
-            />
+              <Route
+                path="tasks/:taskId"
+                element={<TaskDetailsPage />}
+              />
   
-            <Route
-              path="settings"
-              element={<SettingsPage />}
-            />
+              <Route
+                path="settings"
+                element={<SettingsPage />}
+              />
   
-            <Route
-              path="*"
-              element={<NotFoundPage />}
-            />
-          </Route>
-        </Routes>
+              <Route
+                path="*"
+                element={<NotFoundPage />}
+              />
+            </Route>
+          </Routes>
+        </TaskProvider>
       </BrowserRouter>
     );
   }

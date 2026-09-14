@@ -3,18 +3,54 @@ import {
     useSearchParams,
   } from "react-router-dom";
   
+  import { useTaskContext } from "../../../context/TaskContext";
+  
   function TasksPage() {
+    const { state, dispatch } = useTaskContext();
+  
     const [searchParams, setSearchParams] =
       useSearchParams();
   
     const status =
       searchParams.get("status") ?? "all";
   
+    const filteredTasks = state.tasks.filter(
+      (task) => {
+        if (status === "active") {
+          return !task.completed;
+        }
+  
+        if (status === "completed") {
+          return task.completed;
+        }
+  
+        return true;
+      }
+    );
+  
     function handleStatusChange(
       newStatus: string
     ) {
       setSearchParams({
         status: newStatus,
+      });
+    }
+  
+    function handleToggleTask(id: number) {
+      dispatch({
+        type: "TOGGLE_TASK",
+        payload: {
+          id,
+        },
+      });
+    }
+  
+    function handleDeleteTask(id: number) {
+      dispatch({
+        type: "DELETE_TASK",
+        payload: {
+          id,
+        },
       });
     }
   
@@ -31,7 +67,7 @@ import {
             onClick={() => handleStatusChange("all")}
           >
             All
-          </button>
+          </button>{" "}
   
           <button
             onClick={() =>
@@ -39,7 +75,7 @@ import {
             }
           >
             Active
-          </button>
+          </button>{" "}
   
           <button
             onClick={() =>
@@ -54,24 +90,39 @@ import {
   
         <h3>Task List</h3>
   
+        {filteredTasks.length === 0 && (
+          <p>No tasks found.</p>
+        )}
+  
         <ul>
-          <li>
-            <Link to="/tasks/1">
-              Learn React rendering
-            </Link>
-          </li>
+          {filteredTasks.map((task) => (
+            <li key={task.id}>
+              <span>
+                {task.title}{" "}
+                {task.completed && "✅"}
+              </span>{" "}
   
-          <li>
-            <Link to="/tasks/2">
-              Learn useReducer
-            </Link>
-          </li>
+              <button
+                onClick={() =>
+                  handleToggleTask(task.id)
+                }
+              >
+                Toggle
+              </button>{" "}
   
-          <li>
-            <Link to="/tasks/3">
-              Learn React Router
-            </Link>
-          </li>
+              <button
+                onClick={() =>
+                  handleDeleteTask(task.id)
+                }
+              >
+                Delete
+              </button>{" "}
+  
+              <Link to={`/tasks/${task.id}`}>
+                Details
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
     );
