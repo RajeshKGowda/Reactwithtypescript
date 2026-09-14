@@ -106,3 +106,23 @@ useEffect(() => {
     // cleanup logic
   };
 }, [dependencies]);
+
+---
+
+# 16. Custom Hooks and Service Layer
+
+## Separation of Responsibilities
+
+The application was refactored from having API logic directly inside `App.tsx` into separate layers.
+
+The resulting architecture is:
+
+```text
+Component
+    ↓
+Custom Hook
+    ↓
+Service
+    ↓
+API
+
